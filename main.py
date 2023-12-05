@@ -96,10 +96,8 @@ async def tasks() -> list:
         sort_field="task_id"
     async with async_session() as session:
         if sort_type == 'desc':
-            #query = await session.execute(select(Task).order_by(Task.task_id.desc()).limit(3).offset(offset))
             query = await session.execute(select(Task).order_by(sqltxt( sort_field + ' desc')).limit(3).offset(offset))
         else:
-            #query = await session.execute(select(Task).order_by(Task.task_id.asc()).limit(3).offset(offset))
             query = await session.execute(select(Task).order_by(sqltxt( sort_field + ' asc')).limit(3).offset(offset))
         result = query.scalars().all()
 
